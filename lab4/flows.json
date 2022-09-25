@@ -1,0 +1,653 @@
+[
+    {
+        "id": "0c227af531e5614c",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e58406d430918afa",
+        "type": "rpi-sensehatsim in",
+        "z": "0c227af531e5614c",
+        "name": "",
+        "motion": false,
+        "env": true,
+        "stick": false,
+        "x": 100,
+        "y": 60,
+        "wires": [
+            [
+                "901ed3b2d14d01ce",
+                "6533fc48d652bb94",
+                "e55a9e2f55a9dae0",
+                "8b6760a12c699adb"
+            ]
+        ]
+    },
+    {
+        "id": "dd2bc58cd721e82a",
+        "type": "debug",
+        "z": "0c227af531e5614c",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "901ed3b2d14d01ce",
+        "type": "function",
+        "z": "0c227af531e5614c",
+        "name": "function 1",
+        "func": "\nreturn { payload: msg.payload.temperature};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 60,
+        "wires": [
+            [
+                "e250999c23581eee",
+                "867641fcf34d4231",
+                "6fba5b2e1b33101c"
+            ]
+        ]
+    },
+    {
+        "id": "e250999c23581eee",
+        "type": "switch",
+        "z": "0c227af531e5614c",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "20",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "20",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 610,
+        "y": 40,
+        "wires": [
+            [
+                "07456330c998e6b6"
+            ],
+            [
+                "51e933686cd245a7"
+            ]
+        ]
+    },
+    {
+        "id": "07456330c998e6b6",
+        "type": "template",
+        "z": "0c227af531e5614c",
+        "name": "safe",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}} temp within safe limits",
+        "output": "str",
+        "x": 730,
+        "y": 20,
+        "wires": [
+            [
+                "dd2bc58cd721e82a"
+            ]
+        ]
+    },
+    {
+        "id": "51e933686cd245a7",
+        "type": "template",
+        "z": "0c227af531e5614c",
+        "name": "Ctitical",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}} Warn - temp critical!",
+        "output": "str",
+        "x": 730,
+        "y": 60,
+        "wires": [
+            [
+                "dd2bc58cd721e82a",
+                "b55f552bfd165341"
+            ]
+        ]
+    },
+    {
+        "id": "e81ad649a0cf6a38",
+        "type": "template",
+        "z": "0c227af531e5614c",
+        "name": "safe",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}} humidity within safe limits",
+        "output": "str",
+        "x": 730,
+        "y": 160,
+        "wires": [
+            [
+                "c30beaf569540692"
+            ]
+        ]
+    },
+    {
+        "id": "6533fc48d652bb94",
+        "type": "debug",
+        "z": "0c227af531e5614c",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 120,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "867641fcf34d4231",
+        "type": "ui_chart",
+        "z": "0c227af531e5614c",
+        "name": "Temp",
+        "group": "68901351ace90531",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "temp chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 610,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c30beaf569540692",
+        "type": "debug",
+        "z": "0c227af531e5614c",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "e55a9e2f55a9dae0",
+        "type": "function",
+        "z": "0c227af531e5614c",
+        "name": "function 2",
+        "func": "\nreturn { payload: msg.payload.humidity};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 180,
+        "wires": [
+            [
+                "d60c2d0cde115ae4",
+                "a822d91dae5a70ed",
+                "03e22eefd800ef88"
+            ]
+        ]
+    },
+    {
+        "id": "d60c2d0cde115ae4",
+        "type": "switch",
+        "z": "0c227af531e5614c",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "70",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "70",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 610,
+        "y": 180,
+        "wires": [
+            [
+                "e81ad649a0cf6a38"
+            ],
+            [
+                "a696c58dbe41cdf1"
+            ]
+        ]
+    },
+    {
+        "id": "a696c58dbe41cdf1",
+        "type": "template",
+        "z": "0c227af531e5614c",
+        "name": "Ctitical",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}} Warn - humidity critical!",
+        "output": "str",
+        "x": 730,
+        "y": 200,
+        "wires": [
+            [
+                "c30beaf569540692",
+                "ea55f71c3bcd0929"
+            ]
+        ]
+    },
+    {
+        "id": "d15090bb75a2d531",
+        "type": "debug",
+        "z": "0c227af531e5614c",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "8b6760a12c699adb",
+        "type": "function",
+        "z": "0c227af531e5614c",
+        "name": "function 3",
+        "func": "\nreturn { payload: msg.payload.pressure};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 320,
+        "wires": [
+            [
+                "2ebb0969d3f1f630",
+                "e3d84808384fb125",
+                "2cf178cd06caddac"
+            ]
+        ]
+    },
+    {
+        "id": "2ebb0969d3f1f630",
+        "type": "switch",
+        "z": "0c227af531e5614c",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "lte",
+                "v": "1000",
+                "vt": "str"
+            },
+            {
+                "t": "gt",
+                "v": "1000",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 610,
+        "y": 320,
+        "wires": [
+            [
+                "405cdf86dc9905cc"
+            ],
+            [
+                "5b3231b20629dfef"
+            ]
+        ]
+    },
+    {
+        "id": "405cdf86dc9905cc",
+        "type": "template",
+        "z": "0c227af531e5614c",
+        "name": "safe",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}} pressure within safe limits",
+        "output": "str",
+        "x": 730,
+        "y": 300,
+        "wires": [
+            [
+                "d15090bb75a2d531"
+            ]
+        ]
+    },
+    {
+        "id": "5b3231b20629dfef",
+        "type": "template",
+        "z": "0c227af531e5614c",
+        "name": "Ctitical",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload}} Warn - pressure critical!",
+        "output": "str",
+        "x": 730,
+        "y": 340,
+        "wires": [
+            [
+                "d15090bb75a2d531",
+                "37266f1c2c91697a"
+            ]
+        ]
+    },
+    {
+        "id": "6fba5b2e1b33101c",
+        "type": "ui_gauge",
+        "z": "0c227af531e5614c",
+        "name": "Temp Guage",
+        "group": "68901351ace90531",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temp",
+        "label": "\"C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "20",
+        "seg2": "30",
+        "x": 630,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "b55f552bfd165341",
+        "type": "ui_toast",
+        "z": "0c227af531e5614c",
+        "position": "top right",
+        "displayTime": "10",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 900,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a822d91dae5a70ed",
+        "type": "ui_chart",
+        "z": "0c227af531e5614c",
+        "name": "Humidity",
+        "group": "68901351ace90531",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "humidity chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 620,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "03e22eefd800ef88",
+        "type": "ui_gauge",
+        "z": "0c227af531e5614c",
+        "name": "humidity Guage",
+        "group": "68901351ace90531",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "humidity",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "60",
+        "seg2": "80",
+        "x": 640,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "ea55f71c3bcd0929",
+        "type": "ui_toast",
+        "z": "0c227af531e5614c",
+        "position": "top right",
+        "displayTime": "10",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 900,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "37266f1c2c91697a",
+        "type": "ui_toast",
+        "z": "0c227af531e5614c",
+        "position": "top right",
+        "displayTime": "10",
+        "highlight": "red",
+        "sendall": true,
+        "outputs": 0,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 900,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "e3d84808384fb125",
+        "type": "ui_chart",
+        "z": "0c227af531e5614c",
+        "name": "pressure",
+        "group": "68901351ace90531",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "label": "pressure chart",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": "5",
+        "removeOlderPoints": "",
+        "removeOlderUnit": "60",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "x": 620,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2cf178cd06caddac",
+        "type": "ui_gauge",
+        "z": "0c227af531e5614c",
+        "name": "pressure Guage",
+        "group": "68901351ace90531",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "pressure",
+        "label": "",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "1200",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "980",
+        "seg2": "1080",
+        "x": 640,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "68901351ace90531",
+        "type": "ui_group",
+        "name": "HDU",
+        "tab": "4ef626379ff66e1d",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "4ef626379ff66e1d",
+        "type": "ui_tab",
+        "name": "Home",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
